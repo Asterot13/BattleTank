@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Public/TankBarrel.h"
+#include "Public/TankTurret.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values for this component's properties
@@ -11,7 +12,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	bWantsBeginPlay = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -19,7 +21,14 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -53,6 +62,9 @@ void UTankAimingComponent::AimAt(FVector WorldSpace, float LaunchSpeed)
 		StartLocation,
 		WorldSpace,
 		LaunchSpeed,
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	
@@ -60,6 +72,13 @@ void UTankAimingComponent::AimAt(FVector WorldSpace, float LaunchSpeed)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
+		float Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution found"), Time);
+	}
+	else 
+	{
+		float Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution not found"), Time);
 	}
 }
 
@@ -69,6 +88,7 @@ void UTankAimingComponent::MoveBarrel(FVector Direction)
 	FRotator AimAsRotator = Direction.Rotation();
 	FRotator DeltaRotation = AimAsRotator - BarrelRotator;
 
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotation.Pitch);
+	Turret->Rotate(DeltaRotation.Yaw);
 }
 
