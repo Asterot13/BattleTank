@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class AProjectile;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -20,13 +22,16 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 	//
-	void AimAt(FVector HitLocation);
-	//
 	UFUNCTION(BlueprintCallable, Category="Setup")
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	//
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTurretReference(UTankTurret* TurretToSet);
+	//
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+	//
+	void AimAt(FVector HitLocation);
 
 public:	
 	// Called when the game starts or when spawned
@@ -37,7 +42,17 @@ public:
 
 private:
 	//
-	UPROPERTY(EditAnywhere, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
+	//
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float ReloadTimeInSeconds = 3.0f;
+	//
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+	//
+	UTankBarrel* Barrel;
+	//
+	double LastFireTime = 0;
 
 };
