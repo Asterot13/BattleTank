@@ -36,8 +36,8 @@ public:
 
 private:
 	//
-	UTankBarrel* Barrel = nullptr;
+	UTankBarrel* Barrel;
 	//
-	UTankTurret* Turret = nullptr;
+	UTankTurret* Turret;
 		
 };

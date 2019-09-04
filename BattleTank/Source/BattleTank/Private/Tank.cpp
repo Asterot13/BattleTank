@@ -19,7 +19,7 @@ void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (Turret && Barrel && isReloaded)
 	{
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -46,6 +46,7 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
+	Turret = TurretToSet;
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +54,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
 }
 
 // Called to bind functionality to input

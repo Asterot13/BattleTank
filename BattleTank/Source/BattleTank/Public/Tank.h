@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -17,6 +18,9 @@ class BATTLETANK_API ATank : public APawn
 protected:
 	//
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	//
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:
 	// Sets default values for this pawn's properties
@@ -52,6 +56,8 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	//
 	UTankBarrel* Barrel;
+	//
+	UTankTurret* Turret;
 	//
 	double LastFireTime = 0;
 
