@@ -29,6 +29,8 @@ public:
 	//
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendRotateRight(float Throw);
+	//
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 	//
