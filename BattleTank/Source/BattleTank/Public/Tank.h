@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #pragma once
 
@@ -17,6 +17,7 @@ class BATTLETANK_API ATank : public APawn
 
 protected:
 	//
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	//
 	UPROPERTY(BlueprintReadOnly)
@@ -26,25 +27,19 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 	//
-	UFUNCTION(BlueprintCallable, Category="Setup")
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	//
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetTurretReference(UTankTurret* TurretToSet);
-	//
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 	//
 	void AimAt(FVector HitLocation);
 
 public:	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+
+	//
+	virtual void BeginPlay() override;
 	//
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
@@ -54,10 +49,6 @@ private:
 	//
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
-	//
-	UTankBarrel* Barrel;
-	//
-	UTankTurret* Turret;
 	//
 	double LastFireTime = 0;
 

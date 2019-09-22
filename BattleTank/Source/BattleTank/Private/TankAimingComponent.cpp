@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #include "TankAimingComponent.h"
 #include "GameFramework/Actor.h"
@@ -12,23 +12,10 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
+	//bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
-}
-
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	if (!BarrelToSet) { return; }
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
-{
-	if (!TurretToSet) { return; }
-	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -40,6 +27,11 @@ void UTankAimingComponent::BeginPlay()
 	
 }
 
+void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
 
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -77,6 +69,8 @@ void UTankAimingComponent::AimAt(FVector WorldSpace, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrel(FVector Direction)
 {
+	if (!Barrel || !Turret) { return; }
+
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = Direction.Rotation();
 	FRotator DeltaRotation = AimAsRotator - BarrelRotator;

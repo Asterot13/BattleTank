@@ -1,10 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
 
 class UTankBarrel;
 class UTankTurret;
@@ -17,14 +25,16 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	//
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	//
-	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	//
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
+	//
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 public:	
 	// Called every frame
@@ -39,5 +49,5 @@ private:
 	UTankBarrel* Barrel;
 	//
 	UTankTurret* Turret;
-		
+	
 };

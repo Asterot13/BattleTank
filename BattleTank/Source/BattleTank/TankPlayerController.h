@@ -1,14 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #pragma once
 
+class UTankAimingCopmponent;
+
 #include "CoreMinimal.h"
 #include "Public/Tank.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
 /**
- * 
+ * Responsible for helping the player aim
  */
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
@@ -23,6 +26,10 @@ public:
 
 protected:
 	//
+	UFUNCTION(BlueprintImplementableEvent)
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
+	//
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 	//
 	bool GetRayHitLocation(FVector& OutHitLocation) const;
