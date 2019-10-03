@@ -2,11 +2,12 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "AssertionMacros.h"
 #include "Engine/World.h"
 
-ATank* ATankPlayerController::GetControlledTank() const
+APawn* ATankPlayerController::GetControlledTank() const
 {
-	return Cast<ATank>(GetPawn());
+	return GetPawn();
 }
 
 bool ATankPlayerController::GetRayHitLocation(FVector& OutHitLocation) const
@@ -55,12 +56,13 @@ bool ATankPlayerController::GetLookVectorHitDirection(FVector LookDirection, FVe
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector HitLocation;
 	if (GetRayHitLocation(HitLocation)) 
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 }
 
@@ -74,7 +76,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UTankAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	
 	if (AimingComponent)
 	{

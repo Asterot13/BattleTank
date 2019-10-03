@@ -16,39 +16,3 @@ ATank::ATank()
 	FString TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s Donkey: Tank C++ Construct"), *TankName);
 }
-
-void ATank::Fire()
-{
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded)
-	{
-		/*AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);*/
-
-		//Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!TankAimingComponent) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-void ATank::BeginPlay()
-{
-	Super::BeginPlay(); //Needed for BP Begin Play to run!
-
-}
-

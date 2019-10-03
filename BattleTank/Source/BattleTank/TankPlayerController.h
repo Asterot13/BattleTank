@@ -5,7 +5,6 @@
 class UTankAimingCopmponent;
 
 #include "CoreMinimal.h"
-#include "Public/Tank.h"
 #include "TankAimingComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
@@ -30,7 +29,7 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 	//
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
+	APawn* GetControlledTank() const;
 	//
 	bool GetRayHitLocation(FVector& OutHitLocation) const;
 	//
