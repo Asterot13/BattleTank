@@ -56,6 +56,8 @@ bool ATankPlayerController::GetLookVectorHitDirection(FVector LookDirection, FVe
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; } // e.g. if not possessing
+
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(GetControlledTank())) { return; }
 

@@ -41,18 +41,24 @@ protected:
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	//
 	void AimAt(FVector HitLocation);
 	//
 	void MoveBarrel(FVector Direction);
 
 private:
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	//
+	bool IsBarrelMoving();
+
+private:
 	//
 	UTankBarrel* Barrel;
 	//
 	UTankTurret* Turret;
+	//
+	FVector AimDirection;
 	//
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;

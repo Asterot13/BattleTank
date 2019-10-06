@@ -24,7 +24,7 @@ void AProjectile::BeginPlay()
 void AProjectile::LaunchProjectile(float Speed)
 {
 	float Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Projectile firing"), Time);
+	//UE_LOG(LogTemp, Warning, TEXT("%f: Projectile firing"), Time);
 
 	MovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	MovementComponent->Activate();
