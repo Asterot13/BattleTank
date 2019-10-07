@@ -17,6 +17,11 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
@@ -110,6 +115,14 @@ void UTankAimingComponent::MoveBarrel(FVector Direction)
 	FRotator AimAsRotator = Direction.Rotation();
 	FRotator DeltaRotation = AimAsRotator - BarrelRotator;
 
+	// Always yaw shortest way 
 	Barrel->Elevate(DeltaRotation.Pitch);
-	Turret->Rotate(DeltaRotation.Yaw);
+	if (DeltaRotation.Yaw < 180)
+	{
+		Turret->Rotate(DeltaRotation.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotation.Yaw);
+	}
 }

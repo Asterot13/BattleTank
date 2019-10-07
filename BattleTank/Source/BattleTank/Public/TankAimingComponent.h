@@ -45,6 +45,8 @@ public:
 	void AimAt(FVector HitLocation);
 	//
 	void MoveBarrel(FVector Direction);
+	//
+	EFiringState GetFiringState() const;
 
 private:
 	// Called every frame
