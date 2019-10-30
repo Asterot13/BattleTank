@@ -11,7 +11,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 class UTankBarrel;
@@ -27,8 +28,11 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 	//
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
+	//
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
 
 protected:
 	// Called when the game starts
@@ -65,12 +69,14 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
 	//
-	double LastFireTime = 0;
-	//
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.0f;
 	//
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 RoundsLeft = 3;
+	//
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
-	
+	//
+	double LastFireTime = 0;
 };

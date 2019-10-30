@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #include "Public/TankAIController.h"
 #include "Public/TankAimingComponent.h"

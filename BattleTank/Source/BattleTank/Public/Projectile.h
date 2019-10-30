@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright by Vitaliy Novoselov 2019.
 
 #pragma once
 
@@ -28,7 +28,13 @@ public:
 	void LaunchProjectile(float Speed);
 
 private:
-	UPROPERTY(EditAnywhere)
+	//
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UProjectileMovementComponent* MovementComponent = nullptr;
-
+	//
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
+	//
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
 };
