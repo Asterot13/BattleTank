@@ -22,6 +22,8 @@ public:
 	virtual void BeginPlay() override;
 	//
 	virtual void Tick(float DeltaSeconds) override;
+	//
+	virtual void SetPawn(APawn * InPawn) override;
 
 protected:
 	//
@@ -30,6 +32,9 @@ protected:
 	//
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	APawn* GetControlledTank() const;
+	//
+	UFUNCTION()
+	void OnPossesedTankDeath();
 	//
 	bool GetRayHitLocation(FVector& OutHitLocation) const;
 	//

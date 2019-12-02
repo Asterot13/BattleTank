@@ -30,6 +30,7 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
 	// So that first fire after initial reload
 	LastFireTime = FPlatformTime::Seconds();
 }
@@ -67,7 +68,7 @@ bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }
 
-	auto BarrelForward = Barrel->GetForwardVector();
+	FVector BarrelForward = Barrel->GetForwardVector();
 	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 

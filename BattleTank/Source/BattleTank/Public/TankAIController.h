@@ -23,7 +23,12 @@ protected:
 	//
 	virtual void BeginPlay() override;
 	//
+	virtual void SetPawn(APawn* InPawn) override;
+	//
 	virtual void Tick(float DeltaTime) override;
+	//
+	UFUNCTION()
+	void OnPossesedTankDeath();
 	//How close AI tank get
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 6000;
