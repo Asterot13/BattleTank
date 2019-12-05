@@ -18,14 +18,9 @@ private:
 	//
 	UTankTrack();
 	//
-	void ApplySidewayForce();
+	void DriveTrack(float CurrentThrottle);
 	//
-	virtual void BeginPlay() override;
-	//
-	void DriveTrack();
-	//
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	TArray<class ASprungWheel*> GetWheels() const;
 
 public:
 
@@ -33,8 +28,6 @@ public:
 	void SetThrottle(float Throttle);
 
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 30000000;
+	float TrackMaxDrivingForce = 500000; //30 000 000
 
-	UPROPERTY(EditDefaultsOnly)
-	float CurrentThrottle = 0;
 };
